@@ -1,0 +1,7 @@
+node_modules
+yarn-error.log
+.prettierrc
+.parcel-cache
+.vscode
+db.json
+arduino/build

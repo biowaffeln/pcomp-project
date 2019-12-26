@@ -1,0 +1,49 @@
+@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Mono:400,700,700i|Ubuntu+Mono:400,700&display=swap");
+
+body {
+  color: rgb(210, 222, 255, 0.96);
+  background-color: rgb(1, 15, 27);
+  margin: 0;
+  font-family: "IBM Plex Mono";
+}
+
+h1,
+h2 {
+  font-weight: 700;
+  letter-spacing: 0.7px;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+  margin-bottom: 0.2em;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  width: 960px;
+  margin: 0 auto;
+  color: rgb(210, 222, 255, 0.8);
+}
+
+.box {
+  width: 360px;
+  border-radius: 5px;
+  border: 1px solid rgba(186, 206, 241, 0.137);
+  background-color: rgb(16, 26, 46);
+  margin: 20px 20px;
+}
+
+.box h2 {
+  margin: 20px 20px 15px;
+  font-style: italic;
+}
+
+.box > hr {
+  border: 0.5px solid rgba(186, 206, 241, 0.137);
+}
+
+.box__content {
+  margin: 30px 20px;
+}
