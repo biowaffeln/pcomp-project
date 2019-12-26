@@ -1,8 +1,17 @@
-@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Mono:400,700,700i|Ubuntu+Mono:400,700&display=swap");
+@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Mono:400,700,700i");
+
+:root {
+  --text-main: rgba(204, 214, 250, 0.96);
+  --text-secondary: rgb(245, 247, 255, 0.8);
+  --bg-darker: rgb(1, 15, 27);
+  --bg-dark: rgb(16, 26, 46);
+  --bg-lighter: rgba(104, 159, 255, 0.14);
+  --bg-lightest: rgba(186, 206, 241, 0.14);
+}
 
 body {
-  color: rgb(210, 222, 255, 0.96);
-  background-color: rgb(1, 15, 27);
+  color: var(--text-main);
+  background-color: var(--bg-darker);
   margin: 0;
   font-family: "IBM Plex Mono";
 }
@@ -19,19 +28,29 @@ p {
   margin-bottom: 0.2em;
 }
 
+button {
+  color: var(--text-main);
+  background: var(--bg-lighter);
+  border-radius: 3px;
+  font-size: 1rem;
+  cursor: pointer;
+  border: 1.5px solid var(--bg-lightest);
+  padding: 7px 10px;
+}
+
 .footer {
   display: flex;
   justify-content: center;
   width: 960px;
   margin: 0 auto;
-  color: rgb(210, 222, 255, 0.8);
 }
 
 .box {
   width: 360px;
   border-radius: 5px;
-  border: 1px solid rgba(186, 206, 241, 0.137);
-  background-color: rgb(16, 26, 46);
+  border: 1px solid var(--bg-lightest);
+  background-color: var(--bg-dark);
+  color: var(--text-secondary);
   margin: 20px 20px;
 }
 
@@ -41,7 +60,7 @@ p {
 }
 
 .box > hr {
-  border: 0.5px solid rgba(186, 206, 241, 0.137);
+  border: 0.5px solid var(--bg-lightest);
 }
 
 .box__content {
