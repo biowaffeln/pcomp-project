@@ -8,22 +8,22 @@ const MainScreen: React.FC<Props> = ({ state }) => (
   <div>
     <pre>{JSON.stringify(state)}</pre>
     <h1>Welcome back!</h1>
-    <div className="footer">
+    <div className="footer container">
       <div className="box">
         <h2>stats</h2>
         <hr />
         <div className="box__content">
           <p>
             <Emoji>💘</Emoji> Health.......
-            <Percentage number={state.health} /> {state.health}%
+            <Percentage value={state.health} /> {state.health}%
           </p>
           <p>
             <Emoji>🍕</Emoji> Hunger.......
-            <Percentage number={state.hunger} /> {state.hunger}%
+            <Percentage value={state.hunger} /> {state.hunger}%
           </p>
           <p>
             <Emoji>😊</Emoji> Happiness....
-            <Percentage number={state.happiness} /> {state.happiness}%
+            <Percentage value={state.happiness} /> {state.happiness}%
           </p>
         </div>
       </div>
@@ -47,13 +47,13 @@ const Emoji = ({ children }) => (
   <span style={{ display: "inline-block", width: " 15px" }}>{children}</span>
 );
 
-const Percentage = ({ number }) => {
-  const nBlocks = Math.round(number / 8.33333);
-  const nBlanks = 12 - nBlocks;
+const Percentage = ({ value, width = 12 }) => {
+  const numFullBlocks = Math.round((value / 100) * width);
+  const numLightBlocks = width - numFullBlocks;
   return (
     <span>
-      {"█".repeat(nBlocks)}
-      {"░".repeat(nBlanks)}
+      {"█".repeat(numFullBlocks)}
+      {"░".repeat(numLightBlocks)}
     </span>
   );
 };

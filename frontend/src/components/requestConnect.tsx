@@ -5,9 +5,9 @@ type Props = {
 };
 
 const RequestConnect: React.FC<Props> = ({ connect }) => (
-  <div>
-    <h2>no device connected!</h2>
-    <button onClick={connect}>connect</button>
+  <div className="connection">
+    <h1>no device connected :/</h1>
+    <button onClick={connect}>request connection</button>
   </div>
 );
 
