@@ -12,7 +12,7 @@ const PersonalityInput: React.FC<Props> = ({ value, onChange }) => {
 
   return (
     <form className="box__content">
-      <label>
+      <label className={value === "happy" ? "active" : null}>
         <input
           type="radio"
           name="personality"
@@ -22,7 +22,7 @@ const PersonalityInput: React.FC<Props> = ({ value, onChange }) => {
         />
         happy
       </label>
-      <label>
+      <label className={value === "depressed" ? "active" : null}>
         <input
           type="radio"
           name="personality"

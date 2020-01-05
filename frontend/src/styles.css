@@ -94,5 +94,13 @@ button {
   padding: 8px 5px;
   cursor: pointer;
   border-radius: 3px;
-  /* background: var(--bg-lightest); */
+}
+
+.box.personality-box .box__content label.active {
+  background: var(--bg-lightest);
+}
+
+.box.personality-box .box__content input {
+  margin-right: 10px;
+  transform: translateY(1.2px);
 }
