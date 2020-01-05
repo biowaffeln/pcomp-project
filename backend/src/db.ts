@@ -1,13 +1,14 @@
 import * as fs from "fs";
 import { BehaviorSubject } from "rxjs";
 import produce from "immer";
+import { State } from "../../shared/types";
 
 const writeDB = (data: State) => {
   fs.writeFileSync("db.json", JSON.stringify(data));
 };
 
 const readDB = (): State => {
-  const initialStae: State = {
+  const initialState: State = {
     name: "",
     hunger: 0,
     happiness: 0,
@@ -18,19 +19,10 @@ const readDB = (): State => {
 
   try {
     return JSON.parse(fs.readFileSync("db.json").toString());
-  } catch (e) {
-    return initialStae;
+  } catch (_) {
+    return initialState;
   }
 };
-
-export interface State {
-  name: string;
-  hunger: number;
-  happiness: number;
-  health: number;
-  connected: boolean;
-  personality: "happy" | "depressed";
-}
 
 export const store = new BehaviorSubject<State>(readDB());
 

@@ -1,9 +1,10 @@
 import React from "react";
 import PersonalityInput from "./personalityInput";
+import { State, Personality } from "../../../shared/types";
 
 type Props = {
-  state: any;
-  setPersonality: (personality) => void;
+  state: State;
+  setPersonality: (p: Personality) => void;
 };
 
 const MainScreen: React.FC<Props> = ({ state, setPersonality }) => (

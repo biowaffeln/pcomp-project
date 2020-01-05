@@ -5,14 +5,15 @@ import "./styles.css";
 import NameInput from "./components/nameInput";
 import RequestConnect from "./components/requestConnect";
 import MainScreen from "./components/mainScreen";
+import { State, Personality } from "../../shared/types";
 
 const App: React.FC = () => {
   const socketRef = React.useRef(null);
-  const [state, setState] = React.useState(null);
+  const [state, setState] = React.useState<State>(null);
 
   React.useEffect(() => {
     const socket = io("localhost:3000");
-    socket.on("data", data => {
+    socket.on("data", (data: State) => {
       setState(data);
     });
     socketRef.current = socket;
@@ -23,7 +24,7 @@ const App: React.FC = () => {
     socketRef.current.emit("set_name", name);
   };
 
-  const setPersonality = (personality: "happy" | "depressed") => {
+  const setPersonality = (personality: Personality) => {
     socketRef.current.emit("set_personality", personality);
   };
 

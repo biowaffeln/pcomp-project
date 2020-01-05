@@ -1,8 +1,9 @@
 import React from "react";
+import { State, Personality } from "../../../shared/types";
 
 type Props = {
-  value: "happy" | "depressed";
-  onChange: (personality: "happy" | "depressed") => void;
+  value: Personality;
+  onChange: (p: Personality) => void;
 };
 
 const PersonalityInput: React.FC<Props> = ({ value, onChange }) => {
