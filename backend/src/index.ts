@@ -14,7 +14,9 @@ io.on("connection", socket => {
   });
 
   socket.on("set_name", name => {
-    setState(state => void (state.name = name));
+    setState(state => {
+      state.name = name;
+    });
   });
 
   store.subscribe(data => {
@@ -41,11 +43,15 @@ const connect = async () => {
     arduino.send("hello!");
 
     arduino.onDisconnect(() => {
-      setState(state => void (state.connected = false));
+      setState(state => {
+        state.connected = false;
+      });
     });
   } catch (e) {
     console.warn(e);
-    setState(state => void (state.connected = false));
+    setState(state => {
+      state.connected = false;
+    });
   }
 };
 
