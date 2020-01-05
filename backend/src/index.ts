@@ -19,6 +19,12 @@ io.on("connection", socket => {
     });
   });
 
+  socket.on("set_personality", personality => {
+    setState(state => {
+      state.personality = personality;
+    });
+  });
+
   store.subscribe(data => {
     socket.emit("data", data);
   });

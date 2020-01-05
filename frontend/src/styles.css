@@ -87,3 +87,12 @@ button {
   margin: 30px 20px;
   font-size: 0.96rem;
 }
+
+.box.personality-box .box__content label {
+  display: block;
+  margin-bottom: 5px;
+  padding: 8px 5px;
+  cursor: pointer;
+  border-radius: 3px;
+  /* background: var(--bg-lightest); */
+}

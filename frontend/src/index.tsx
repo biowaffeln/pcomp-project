@@ -23,6 +23,10 @@ const App: React.FC = () => {
     socketRef.current.emit("set_name", name);
   };
 
+  const setPersonality = (personality: "happy" | "depressed") => {
+    socketRef.current.emit("set_personality", personality);
+  };
+
   const connect = () => socketRef.current.emit("request_connect");
 
   if (state === null) {
@@ -38,7 +42,7 @@ const App: React.FC = () => {
   }
 
   if (state.connected) {
-    return <MainScreen state={state} />;
+    return <MainScreen state={state} setPersonality={setPersonality} />;
   }
 };
 

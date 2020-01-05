@@ -1,10 +1,12 @@
 import React from "react";
+import PersonalityInput from "./personalityInput";
 
 type Props = {
   state: any;
+  setPersonality: (personality) => void;
 };
 
-const MainScreen: React.FC<Props> = ({ state }) => (
+const MainScreen: React.FC<Props> = ({ state, setPersonality }) => (
   <div>
     <pre>{JSON.stringify(state)}</pre>
     <h1>Welcome back!</h1>
@@ -27,17 +29,10 @@ const MainScreen: React.FC<Props> = ({ state }) => (
           </p>
         </div>
       </div>
-      <div className="box">
+      <div className="box personality-box">
         <h2>personality</h2>
         <hr />
-        <form className="box__content">
-          <label>normal</label>
-          <input type="checkbox" value="test1" />
-          <label>happy</label>
-          <input type="checkbox" value="test2" />
-          <label>depressed</label>
-          <input type="checkbox" value="test3" />
-        </form>
+        <PersonalityInput value={state.personality} onChange={setPersonality} />
       </div>
     </div>
   </div>

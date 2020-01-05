@@ -13,6 +13,7 @@ const readDB = (): State => {
     happiness: 0,
     health: 100,
     connected: false,
+    personality: "happy",
   };
 
   try {
@@ -28,6 +29,7 @@ export interface State {
   happiness: number;
   health: number;
   connected: boolean;
+  personality: "happy" | "depressed";
 }
 
 export const store = new BehaviorSubject<State>(readDB());
