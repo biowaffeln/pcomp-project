@@ -6,6 +6,12 @@ import NameInput from "./components/nameInput";
 import RequestConnect from "./components/requestConnect";
 import MainScreen from "./components/mainScreen";
 import { State, Personality } from "../../shared/types";
+import {
+  SET_NAME,
+  SET_PERSONALITY,
+  REQUEST_CONNECT,
+  SOCKET_DATA,
+} from "../../shared/socket-events";
 
 const App: React.FC = () => {
   const socketRef = React.useRef(null);
@@ -13,7 +19,7 @@ const App: React.FC = () => {
 
   React.useEffect(() => {
     const socket = io("localhost:3000");
-    socket.on("data", (data: State) => {
+    socket.on(SOCKET_DATA, (data: State) => {
       setState(data);
     });
     socketRef.current = socket;
@@ -21,14 +27,14 @@ const App: React.FC = () => {
 
   /* event handlers */
   const setName = (name: string) => {
-    socketRef.current.emit("set_name", name);
+    socketRef.current.emit(SET_NAME, name);
   };
 
   const setPersonality = (personality: Personality) => {
-    socketRef.current.emit("set_personality", personality);
+    socketRef.current.emit(SET_PERSONALITY, personality);
   };
 
-  const connect = () => socketRef.current.emit("request_connect");
+  const connect = () => socketRef.current.emit(REQUEST_CONNECT);
 
   if (state === null) {
     return <p>"connecting..."</p>;

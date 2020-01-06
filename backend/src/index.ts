@@ -4,30 +4,37 @@ import { createServer } from "http";
 import { connectToArduino } from "./serial";
 import { store, setState } from "./db";
 import { initGame } from "./game";
+import {
+  REQUEST_CONNECT,
+  SET_NAME,
+  SET_PERSONALITY,
+  SOCKET_DATA,
+} from "../../shared/socket-events";
 
+/* TODO: remove express, don't rly need it */
 const app = express();
 const http = createServer(app);
 const io = socketio(http);
 
 io.on("connection", socket => {
-  socket.on("request_connect", () => {
-    connect();
+  socket.on(REQUEST_CONNECT, () => {
+    init();
   });
 
-  socket.on("set_name", name => {
+  socket.on(SET_NAME, name => {
     setState(state => {
       state.name = name;
     });
   });
 
-  socket.on("set_personality", personality => {
+  socket.on(SET_PERSONALITY, personality => {
     setState(state => {
       state.personality = personality;
     });
   });
 
   store.subscribe(data => {
-    socket.emit("data", data);
+    socket.emit(SOCKET_DATA, data);
   });
 });
 
@@ -36,30 +43,29 @@ http.listen(port, () => {
   console.info(`server running on port ${port}`);
 });
 
-/* test arduino */
-
-const connect = async () => {
+const init = async () => {
   try {
-    const arduino = await connectToArduino();
-
-    setState(state => {
-      state.connected = true;
-    });
-
+    const arduino = await connect();
     initGame(arduino);
-
-    arduino.onDisconnect(() => {
-      setState(state => {
-        state.connected = false;
-      });
-    });
   } catch (e) {
-    // arduino fails to connect
     console.warn(e);
-    setState(state => {
-      state.connected = false;
-    });
   }
 };
 
-connect();
+const connect = async () => {
+  const arduino = await connectToArduino();
+
+  setState(state => {
+    state.connected = true;
+  });
+
+  arduino.onDisconnect(() => {
+    setState(state => {
+      state.connected = false;
+    });
+  });
+
+  return arduino;
+};
+
+init();
