@@ -27,7 +27,7 @@ const readDB = (): State => {
 export const store = new BehaviorSubject<State>(readDB());
 
 store.subscribe(writeDB);
-store.subscribe(console.info);
+// store.subscribe(console.info);
 
 export const setState = (fn: (state: State) => void) => {
   store.next(produce(store.getValue(), fn));

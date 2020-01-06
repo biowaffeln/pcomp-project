@@ -3,7 +3,7 @@ import * as Readline from "@serialport/parser-readline";
 
 const SerialPromise = (): Promise<SerialPort> => {
   return new Promise((resolve, reject) => {
-    const port = new SerialPort("COM3", { baudRate: 9600 }, err => {
+    const port = new SerialPort("COM5", { baudRate: 9600 }, err => {
       if (err) {
         reject(err.message);
       } else {
@@ -13,7 +13,7 @@ const SerialPromise = (): Promise<SerialPort> => {
   });
 };
 
-interface Arduino {
+export interface Arduino {
   send: (data: string) => void;
   onData: (handler: (data: string) => void) => void;
   onDisconnect: (handler: (data?: any) => void) => void;

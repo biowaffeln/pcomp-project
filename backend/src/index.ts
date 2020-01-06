@@ -3,6 +3,7 @@ import * as socketio from "socket.io";
 import { createServer } from "http";
 import { connectToArduino } from "./serial";
 import { store, setState } from "./db";
+import { initGame } from "./game";
 
 const app = express();
 const http = createServer(app);
@@ -41,12 +42,11 @@ const connect = async () => {
   try {
     const arduino = await connectToArduino();
 
-    setState(state => void (state.connected = true));
-    arduino.onData(msg => {
-      console.info(msg);
+    setState(state => {
+      state.connected = true;
     });
 
-    arduino.send("hello!");
+    initGame(arduino);
 
     arduino.onDisconnect(() => {
       setState(state => {
@@ -54,6 +54,7 @@ const connect = async () => {
       });
     });
   } catch (e) {
+    // arduino fails to connect
     console.warn(e);
     setState(state => {
       state.connected = false;
