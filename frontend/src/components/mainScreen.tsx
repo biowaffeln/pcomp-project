@@ -9,8 +9,10 @@ type Props = {
 
 const MainScreen: React.FC<Props> = ({ state, setPersonality }) => (
   <div>
-    <pre>{JSON.stringify(state)}</pre>
-    <h1>Welcome back!</h1>
+    <div className="container">
+      <pre>{JSON.stringify(state)}</pre>
+      <h1>Welcome back!</h1>
+    </div>
     <div className="footer container">
       <div className="box">
         <h2>stats</h2>
