@@ -105,13 +105,19 @@ void setup() {
 
 }
 
+unsigned long previousMillis = 0;
+const long logInterval = 100;
+
 void loop() {
 
 	cs_4_2.set_CS_AutocaL_Millis(0xFFFFFFFF);
 
-	long total1 = cs_4_2.capacitiveSensor(30);
-	Serial.println("touch " + String(total1));
-	delay(10);
+	unsigned long currentMillis = millis();
+	if (currentMillis - previousMillis >= logInterval) {
+		previousMillis = currentMillis;
+		long total1 = cs_4_2.capacitiveSensor(30);
+		Serial.println("touch " + String(total1));
+	}
 
 	char message[32] = "";
 	byte i = 0;
