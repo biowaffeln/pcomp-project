@@ -1,8 +1,12 @@
 #include <LedControl.h>
 #include <WString.h>
+#include <Servo.h>
 
 LedControl lc =
 	LedControl(12, 10, 11, 2); // Pins: DIN,CLK,CS, # of Display connected
+
+Servo servoLeft;
+Servo servoRight;
 
 byte closed[] = {
 	B00000000, B00000000, B00000000, B00000000,
@@ -89,6 +93,13 @@ void setup() {
 	lc.clearDisplay(1);
 
 	setEyes(look_straight_1);
+
+	servoLeft.attach(5);
+	servoRight.attach(6);
+
+	servoLeft.write(0);
+	servoRight.write(0);
+
 }
 
 void loop() {
@@ -130,6 +141,11 @@ void parseCommands(char msg[]) {
 
 	} else if (strcmp(cmdName, "srv") == 0) {
 		charPointer = strtok(NULL, " ");
+
+		int degrees = atoi(charPointer);
+		servoLeft.write(degrees);
+		servoRight.write(degrees);
+
 	} else {
 		Serial.print("unknown command ");
 		Serial.println(cmdName);
