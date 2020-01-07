@@ -1,9 +1,12 @@
 #include <LedControl.h>
 #include <WString.h>
 #include <Servo.h>
+#include <CapacitiveSensor.h>
 
 LedControl lc =
 	LedControl(12, 10, 11, 2); // Pins: DIN,CLK,CS, # of Display connected
+
+CapacitiveSensor cs_4_2 = CapacitiveSensor(2,0);
 
 Servo servoLeft;
 Servo servoRight;
@@ -103,6 +106,13 @@ void setup() {
 }
 
 void loop() {
+
+	cs_4_2.set_CS_AutocaL_Millis(0xFFFFFFFF);
+
+	long total1 = cs_4_2.capacitiveSensor(30);
+	Serial.println("touch " + String(total1));
+	delay(10);
+
 	char message[32] = "";
 	byte i = 0;
 
@@ -146,8 +156,9 @@ void parseCommands(char msg[]) {
 		servoLeft.write(degrees);
 		servoRight.write(degrees);
 
-	} else {
-		Serial.print("unknown command ");
-		Serial.println(cmdName);
 	}
+	// else {
+	// 	Serial.print("unknown command ");
+	// 	Serial.println(cmdName);
+	// }
 }
