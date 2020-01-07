@@ -5,3 +5,4 @@ yarn-error.log
 .vscode
 db.json
 arduino/build
+uncrustify.cfg
