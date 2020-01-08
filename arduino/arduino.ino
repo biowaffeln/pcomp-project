@@ -1,15 +1,17 @@
-#include <LedControl.h>
-#include <WString.h>
-#include <Servo.h>
 #include <CapacitiveSensor.h>
+#include <LedControl.h>
+#include <Servo.h>
+#include <WString.h>
 
 LedControl lc =
 	LedControl(12, 10, 11, 2); // Pins: DIN,CLK,CS, # of Display connected
 
-CapacitiveSensor cs_2_0 = CapacitiveSensor(2,0);
+CapacitiveSensor cs_2_0 = CapacitiveSensor(2, 0);
 
 Servo servoLeft;
 Servo servoRight;
+
+int lastFeedBtnValue = 1;
 
 byte closed[] = {
 	B00000000, B00000000, B00000000, B00000000,
@@ -35,9 +37,23 @@ byte look_straight_4[] = {
 	B11100111, B00000000, B00000000, B00000000,
 };
 
+byte look_joy_1[] = {
+	B00111100, B01111110, B11100111, B11100111,
+	B11111111, B11111111, B01111110, B00111100,
+};
+
+byte look_joy_2[] = {
+	B00111100, B01111110, B11100111, B11100111,
+	B11111111, B11111111, B01111110, B00000000,
+};
+byte look_joy_3[] = {
+	B00111100, B01111110, B11100111, B11100111,
+	B11111111, B01111110, B00000000, B00000000,
+};
+
 void setEye(int display, byte arr[]) {
 	for (int i = 0; i < 8; i++) {
-		lc.setRow(display, i, arr[i]);
+		lc.setRow(display, i, arr[7 - i]);
 	}
 }
 
@@ -87,8 +103,25 @@ void unsquint() {
 	setEyes(look_straight_1);
 }
 
+void joy() {
+	setEyes(look_joy_1);
+	delay(50);
+	setEyes(look_joy_2);
+	delay(50);
+	setEyes(look_joy_3);
+	delay(500);
+	setEyes(look_joy_2);
+	delay(50);
+	setEyes(look_joy_1);
+	delay(50);
+	setEyes(look_straight_1);
+}
+
 void setup() {
 	Serial.begin(9600);
+
+	// 0 when pressed
+	pinMode(4, INPUT_PULLUP);
 
 	// wake up displays
 	lc.shutdown(0, false);
@@ -106,7 +139,6 @@ void setup() {
 	servoRight.attach(6);
 
 	setServos(30);
-
 }
 
 unsigned long previousMillis = 0;
@@ -119,8 +151,17 @@ void loop() {
 	unsigned long currentMillis = millis();
 	if (currentMillis - previousMillis >= logInterval) {
 		previousMillis = currentMillis;
+
+		// send data over serial
 		long total1 = cs_2_0.capacitiveSensor(30);
 		Serial.println("touch " + String(total1));
+
+		int feedBtn = digitalRead(4);
+		if (feedBtn != lastFeedBtnValue) {
+			if (feedBtn == 0)
+				Serial.println("feed");
+			lastFeedBtnValue = feedBtn;
+		}
 	}
 
 	char message[32] = "";
@@ -157,6 +198,9 @@ void parseCommands(char msg[]) {
 		}
 		if (strcmp(charPointer, "unsquint") == 0) {
 			unsquint();
+		}
+		if (strcmp(charPointer, "joy") == 0) {
+			joy();
 		}
 
 	} else if (strcmp(cmdName, "srv") == 0) {

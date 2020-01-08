@@ -21,6 +21,7 @@ export const initGame = (arduino: Arduino) => {
    */
 
   let squinting = false;
+  let joy = false;
   let hungry = store.value.hunger >= 80;
 
   arduino.onData(data => {
@@ -34,24 +35,27 @@ export const initGame = (arduino: Arduino) => {
       const capVal = +cmd[1];
       if (capVal < THRESHOLD) {
         squinting && arduino.send("led unsquint;");
-        squinting && !hungry && arduino.send("srv 180;");
+        squinting && !hungry && arduino.send("srv 30;");
         squinting = false;
       } else {
+        !squinting && !hungry && arduino.send("srv 90;");
         !squinting && arduino.send("led squint;");
-        !squinting && !hungry && arduino.send("srv 30;");
         squinting = true;
       }
     };
 
     const handleFeed = () => {
       setState(state => {
-        state.hunger += 10;
-        if (state.hunger > 100) state.hunger = 100;
+        state.hunger -= 10;
+        if (state.hunger < 0) state.hunger = 0;
+        arduino.send("led joy;");
       });
     };
 
     if (cmd[0] === "touch") {
       handleTouch(+cmd[1]);
+    } else if (cmd[0] == "feed\r") {
+      handleFeed();
     }
   });
 
