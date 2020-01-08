@@ -6,7 +6,7 @@
 LedControl lc =
 	LedControl(12, 10, 11, 2); // Pins: DIN,CLK,CS, # of Display connected
 
-CapacitiveSensor cs_4_2 = CapacitiveSensor(2,0);
+CapacitiveSensor cs_2_0 = CapacitiveSensor(2,0);
 
 Servo servoLeft;
 Servo servoRight;
@@ -110,12 +110,12 @@ const long logInterval = 100;
 
 void loop() {
 
-	cs_4_2.set_CS_AutocaL_Millis(0xFFFFFFFF);
+	cs_2_0.set_CS_AutocaL_Millis(0xFFFFFFFF);
 
 	unsigned long currentMillis = millis();
 	if (currentMillis - previousMillis >= logInterval) {
 		previousMillis = currentMillis;
-		long total1 = cs_4_2.capacitiveSensor(30);
+		long total1 = cs_2_0.capacitiveSensor(30);
 		Serial.println("touch " + String(total1));
 	}
 
