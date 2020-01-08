@@ -100,7 +100,7 @@ void setup() {
 	servoLeft.attach(5);
 	servoRight.attach(6);
 
-	servoLeft.write(0);
+	servoLeft.write(180);
 	servoRight.write(0);
 
 }
@@ -159,7 +159,7 @@ void parseCommands(char msg[]) {
 		charPointer = strtok(NULL, " ");
 
 		int degrees = atoi(charPointer);
-		servoLeft.write(degrees);
+		servoLeft.write(180 - degrees);
 		servoRight.write(degrees);
 
 	}
