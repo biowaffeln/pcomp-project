@@ -46,6 +46,11 @@ void setEyes(byte arr[]) {
 	setEye(1, arr);
 }
 
+void setServos(int degrees) {
+	servoLeft.write(180 - degrees);
+	servoRight.write(degrees);
+}
+
 void blink() {
 	setEyes(look_straight_1);
 	delay(20);
@@ -100,8 +105,7 @@ void setup() {
 	servoLeft.attach(5);
 	servoRight.attach(6);
 
-	servoLeft.write(180);
-	servoRight.write(0);
+	setServos(30);
 
 }
 
@@ -159,9 +163,7 @@ void parseCommands(char msg[]) {
 		charPointer = strtok(NULL, " ");
 
 		int degrees = atoi(charPointer);
-		servoLeft.write(180 - degrees);
-		servoRight.write(degrees);
-
+		setServos(degrees);
 	}
 	// else {
 	// 	Serial.print("unknown command ");
