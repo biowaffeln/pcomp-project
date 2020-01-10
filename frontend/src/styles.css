@@ -2,11 +2,16 @@
 
 :root {
   --text-main: rgba(204, 214, 250, 0.96);
-  --text-secondary: rgb(245, 247, 255, 0.8);
+  --text-secondary: rgb(245, 247, 255, 0.75);
+  --accent: rgba(99, 185, 235, 0.5);
   --bg-darker: rgb(1, 15, 27);
   --bg-dark: rgb(16, 26, 46);
   --bg-lighter: rgba(104, 159, 255, 0.14);
   --bg-lightest: rgba(186, 206, 241, 0.14);
+}
+
+.center {
+  text-align: center;
 }
 
 body {
@@ -29,26 +34,50 @@ p {
 }
 
 button {
+  margin: 0;
   color: var(--text-main);
   background: var(--bg-lighter);
   border-radius: 3px;
   font-size: 0.9rem;
   cursor: pointer;
-  border: 1.5px solid var(--bg-lightest);
-  padding: 7px 10px;
+  border: 1px solid var(--bg-lightest);
+  padding: 10px 15px;
   font-family: inherit;
 }
 
-.connection {
+.connection,
+.name-input {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
 }
-
-.connection h1 {
+.connection h1,
+.name-input h1 {
   margin-bottom: 20px;
+}
+
+.name-input p {
+  color: var(--text-secondary);
+  margin-bottom: 25px;
+}
+
+.name-input input {
+  padding: 10px 13px;
+  font-size: 1.2rem;
+  font-family: inherit;
+  background: transparent;
+  outline: none;
+  color: var(--text-secondary);
+  border: none;
+  border-bottom: 2px solid var(--bg-lightest);
+  margin-right: 10px;
+  text-align: center;
+}
+
+.name-input input:focus {
+  border-bottom: 2px solid var(--accent);
 }
 
 .footer {

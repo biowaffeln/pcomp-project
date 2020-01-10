@@ -4,14 +4,16 @@ type Props = {
   setName: (name: string) => void;
 };
 
-const SetName: React.FC<Props> = ({ setName }) => {
+const NameInput: React.FC<Props> = ({ setName }) => {
   const [input, setInput] = useState("");
 
   return (
-    <div>
-      <h2>Welcome!</h2>
-      <p>according to our records, your robot does not have a name yet.</p>
-      <p>Please input a name:</p>
+    <div className="name-input">
+      <h1>Welcome!</h1>
+      <p>
+        according to our records, your robot does not have <br />a name yet.
+        Please input a name:
+      </p>
       <form
         onSubmit={e => void e.preventDefault() || (input && setName(input))}
       >
@@ -26,4 +28,4 @@ const SetName: React.FC<Props> = ({ setName }) => {
   );
 };
 
-export default SetName;
+export default NameInput;

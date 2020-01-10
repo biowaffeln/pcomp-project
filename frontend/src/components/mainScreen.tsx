@@ -10,8 +10,10 @@ type Props = {
 const MainScreen: React.FC<Props> = ({ state, setPersonality }) => (
   <div>
     <div className="container">
-      <pre>{JSON.stringify(state)}</pre>
-      <h1>Welcome back!</h1>
+      <h1 className="center">Welcome back!</h1>
+    </div>
+    <div className="container textbox center">
+      <h2>here be some text</h2>
     </div>
     <div className="footer container">
       <div className="box">
@@ -37,6 +39,9 @@ const MainScreen: React.FC<Props> = ({ state, setPersonality }) => (
         <hr />
         <PersonalityInput value={state.personality} onChange={setPersonality} />
       </div>
+    </div>
+    <div className="container">
+      <pre>{JSON.stringify(state, null, 2)}</pre>
     </div>
   </div>
 );
