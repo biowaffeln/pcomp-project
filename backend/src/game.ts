@@ -21,7 +21,6 @@ export const initGame = (arduino: Arduino) => {
    */
 
   let squinting = false;
-  let joy = false;
   let hungry = store.value.hunger >= 80;
 
   arduino.onData(data => {
@@ -48,7 +47,7 @@ export const initGame = (arduino: Arduino) => {
       setState(state => {
         state.hunger -= 10;
         if (state.hunger < 0) state.hunger = 0;
-        arduino.send("led joy;");
+        joyReaction();
       });
     };
 
@@ -93,7 +92,7 @@ export const initGame = (arduino: Arduino) => {
     if (time % 3 == 0) {
       if (store.value.hunger >= 80) {
         hungry = true;
-        grumpy();
+        grumpyReaction();
         setState(state => {
           state.health -= 1;
           if (state.health < 100) state.health = 100;
@@ -108,12 +107,20 @@ export const initGame = (arduino: Arduino) => {
     }
   });
 
-  const grumpy = async () => {
+  const grumpyReaction = async () => {
     arduino.send("srv 0;");
     await sleep(500);
+    arduino.send("led squint;");
     arduino.send("srv 20;");
     await sleep(500);
+    arduino.send("led unsquint;");
     arduino.send("srv 0;");
+  };
+
+  const joyReaction = async () => {
+    arduino.send("srv 120;");
+    arduino.send("led joy;");
+    arduino.send("srv 30;");
   };
 
   arduino.onDisconnect(() => {
