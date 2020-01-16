@@ -2,7 +2,6 @@ import { Arduino } from "./serial";
 import { Subject, interval } from "rxjs";
 import { takeUntil, map, distinctUntilChanged } from "rxjs/operators";
 import { store, setState } from "./db";
-import { stat } from "fs";
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -31,8 +30,7 @@ export const initGame = (arduino: Arduino) => {
     const handleTouch = (val: number) => {
       const THRESHOLD = 10;
 
-      const capVal = +cmd[1];
-      if (capVal < THRESHOLD) {
+      if (val < THRESHOLD) {
         squinting && arduino.send("led unsquint;");
         squinting && !hungry && arduino.send("srv 30;");
         squinting = false;
@@ -95,7 +93,7 @@ export const initGame = (arduino: Arduino) => {
         grumpyReaction();
         setState(state => {
           state.health -= 1;
-          if (state.health < 100) state.health = 100;
+          if (state.health > 100) state.health = 100;
         });
       } else {
         setState(state => {
@@ -118,7 +116,7 @@ export const initGame = (arduino: Arduino) => {
   };
 
   const joyReaction = async () => {
-    arduino.send("srv 120;");
+    arduino.send("srv 160;");
     arduino.send("led joy;");
     arduino.send("srv 30;");
   };

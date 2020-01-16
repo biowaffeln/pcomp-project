@@ -11,7 +11,7 @@ const readDB = (): State => {
   const initialState: State = {
     name: "",
     hunger: 0,
-    happiness: 0,
+    happiness: 100,
     health: 100,
     connected: false,
     personality: "happy",

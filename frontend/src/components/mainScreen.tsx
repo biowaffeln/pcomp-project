@@ -1,20 +1,20 @@
 import React from "react";
 import PersonalityInput from "./personalityInput";
 import { State, Personality } from "../../../shared/types";
+import MessageDisplay from "./messageDisplay";
 
 type Props = {
   state: State;
   setPersonality: (p: Personality) => void;
+  messages: string[];
 };
 
-const MainScreen: React.FC<Props> = ({ state, setPersonality }) => (
+const MainScreen: React.FC<Props> = ({ state, setPersonality, messages }) => (
   <div>
     <div className="container">
       <h1 className="center">Welcome back!</h1>
     </div>
-    <div className="container textbox center">
-      <h2>here be some text</h2>
-    </div>
+    <MessageDisplay messages={messages} />
     <div className="footer container">
       <div className="box">
         <h2>stats</h2>

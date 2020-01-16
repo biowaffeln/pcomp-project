@@ -11,16 +11,21 @@ import {
   SET_PERSONALITY,
   REQUEST_CONNECT,
   SOCKET_DATA,
+  TEXT_MESSAGE,
 } from "../../shared/socket-events";
 
 const App: React.FC = () => {
   const socketRef = React.useRef(null);
   const [state, setState] = React.useState<State>(null);
+  const [messages, setMessages] = React.useState<string[]>([]);
 
   React.useEffect(() => {
     const socket = io("localhost:3000");
     socket.on(SOCKET_DATA, (data: State) => {
       setState(data);
+    });
+    socket.on(TEXT_MESSAGE, (message: string) => {
+      setMessages(messages => [...messages, message]);
     });
     socketRef.current = socket;
   }, []);
@@ -49,7 +54,13 @@ const App: React.FC = () => {
   }
 
   if (state.connected) {
-    return <MainScreen state={state} setPersonality={setPersonality} />;
+    return (
+      <MainScreen
+        state={state}
+        messages={messages}
+        setPersonality={setPersonality}
+      />
+    );
   }
 };
 
