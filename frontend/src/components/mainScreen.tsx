@@ -1,7 +1,7 @@
 import React from "react";
+import MessageDisplay from "./messageDisplay";
 import PersonalityInput from "./personalityInput";
 import { State, Personality } from "../../../shared/types";
-import MessageDisplay from "./messageDisplay";
 
 type Props = {
   state: State;
