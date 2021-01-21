@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "express": "^4.17.1",
-    "immer": "^5.1.0",
+    "immer": "^8.0.1",
     "rxjs": "^6.5.3",
     "serialport": "^8.0.5",
     "socket.io": "^2.3.0"
